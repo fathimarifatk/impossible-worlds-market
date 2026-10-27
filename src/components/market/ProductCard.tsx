@@ -28,19 +28,37 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
   const wished = wishlist.has(product.id);
   const h = product.hue;
 
-  /* ─── ROBOT WORLD ─── unchanged futuristic style */
+  /* ─── ROBOT WORLD ─── futuristic with photo backdrop */
   if (world === "robot") {
     const accent = index % 2 ? "magenta" : "cyan";
     return (
       <article className={`group glass-cosmic relative flex h-full flex-col overflow-hidden rounded-2xl p-4 transition-all duration-500 hover:-translate-y-1.5 ${accent === "cyan" ? "hover:glow-cyan hover:border-cyan" : "hover:glow-magenta hover:border-magenta"}`}>
-        <div
-          className="relative grid aspect-square place-items-center overflow-hidden rounded-xl starfield"
-          style={{ backgroundColor: `oklch(0.16 0.08 ${h})`, backgroundImage: `radial-gradient(circle at 50% 55%, oklch(0.55 0.22 ${h} / 0.7), transparent 60%)` }}
-        >
+        <div className="relative grid aspect-square place-items-center overflow-hidden rounded-xl">
+          {/* Real sci-fi photo backdrop */}
+          <img
+            src={product.robotImageUrl}
+            alt={v.name}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          {/* Dark cosmic void overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-void/80 via-void/55 to-void/30" />
+          {/* Per-product hue glow — screen blend for holographic colour */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 50% 55%, oklch(0.55 0.22 ${h} / 0.6), transparent 62%)`,
+              mixBlendMode: "screen",
+            }}
+          />
+          {/* Orbital rings */}
           <div className="absolute size-[72%] rounded-full border border-cyan/30 animate-spin-slow" style={{ transform: "rotateX(70deg)" }} />
           <div className="absolute size-[56%] rounded-full border border-dashed border-magenta/40 animate-spin-slow [animation-direction:reverse]" />
-          <ProductIcon name={product.icon} className="relative size-16 text-starlight drop-shadow-[0_0_14px_currentColor] transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6" />
+          {/* Icon overlay */}
+          <ProductIcon name={product.icon} className="relative size-14 text-starlight drop-shadow-[0_0_16px_currentColor] transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6" />
+          {/* Badge */}
           <span className="absolute left-3 top-3 rounded-full border border-cyan/50 bg-void/60 px-2.5 py-1 font-mono text-[10px] tracking-widest text-cyan">{v.badge}</span>
+          {/* Wishlist */}
           <button aria-label="Add to wishlist" onClick={() => toggleWish(product.id)} className="absolute right-3 top-3 grid size-8 place-items-center rounded-full border border-border bg-void/50 text-starlight transition hover:text-magenta">
             <Heart className={`size-4 ${wished ? "fill-magenta text-magenta" : ""}`} />
           </button>

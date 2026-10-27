@@ -15,7 +15,8 @@ export interface Product {
   hue: number; // drives per-product art colours (robot world)
   category: number; // index into categories
   tags: ("featured" | "best" | "new" | "impossible")[];
-  imageUrl: string; // real product photograph (Unsplash CDN)
+  imageUrl: string; // human world product photograph (Unsplash CDN)
+  robotImageUrl: string; // robot world product photograph — dark/sci-fi themed
   rating: number; // sample rating e.g. 4.7
   reviews: number; // sample review count
   human: WorldVariant;
@@ -50,6 +51,8 @@ export const products: Product[] = [
     tags: ["featured", "impossible"],
     imageUrl:
       "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&w=800&q=75&fit=crop",
     rating: 4.8,
     reviews: 2341,
     human: {
@@ -73,6 +76,8 @@ export const products: Product[] = [
     tags: ["featured", "new"],
     imageUrl:
       "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1519751138087-5bf79df62d5b?auto=format&w=800&q=75&fit=crop",
     rating: 4.6,
     reviews: 1872,
     human: {
@@ -96,6 +101,8 @@ export const products: Product[] = [
     tags: ["best"],
     imageUrl:
       "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&w=800&q=75&fit=crop",
     rating: 4.9,
     reviews: 3109,
     human: {
@@ -119,6 +126,8 @@ export const products: Product[] = [
     tags: ["featured", "best"],
     imageUrl:
       "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&w=800&q=75&fit=crop",
     rating: 4.7,
     reviews: 4852,
     human: {
@@ -142,6 +151,8 @@ export const products: Product[] = [
     tags: ["impossible", "best"],
     imageUrl:
       "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&w=800&q=75&fit=crop",
     rating: 4.5,
     reviews: 987,
     human: {
@@ -165,6 +176,8 @@ export const products: Product[] = [
     tags: ["new"],
     imageUrl:
       "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&w=800&q=75&fit=crop",
     rating: 4.8,
     reviews: 1654,
     human: {
@@ -188,6 +201,8 @@ export const products: Product[] = [
     tags: ["featured", "new"],
     imageUrl:
       "https://images.unsplash.com/photo-1601132359816-0c1c3e6f5756?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1537519098122-6d6afaea8047?auto=format&w=800&q=75&fit=crop",
     rating: 4.6,
     reviews: 2201,
     human: {
@@ -211,6 +226,8 @@ export const products: Product[] = [
     tags: ["impossible", "best"],
     imageUrl:
       "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&w=800&q=75&fit=crop",
     rating: 4.9,
     reviews: 5432,
     human: {
@@ -220,7 +237,7 @@ export const products: Product[] = [
       badge: "BEST LOVED",
     },
     robot: {
-      name: "Humour Fragment #∞",
+      name: "Humour Fragment #\u221e",
       description: "Final recorded human joke. Logic: undefined.",
       price: 21000,
       badge: "COSMIC EXCLUSIVE",
@@ -234,6 +251,8 @@ export const products: Product[] = [
     tags: ["featured", "impossible"],
     imageUrl:
       "https://images.unsplash.com/photo-1530049478825-8f4cc6fac786?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&w=800&q=75&fit=crop",
     rating: 4.7,
     reviews: 3876,
     human: {
@@ -257,6 +276,8 @@ export const products: Product[] = [
     tags: ["new", "best"],
     imageUrl:
       "https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1551244072-5d12893278bc?auto=format&w=800&q=75&fit=crop",
     rating: 4.4,
     reviews: 743,
     human: {
@@ -280,6 +301,8 @@ export const products: Product[] = [
     tags: ["new", "impossible"],
     imageUrl:
       "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&w=800&q=75&fit=crop",
     rating: 4.7,
     reviews: 2088,
     human: {
@@ -303,6 +326,8 @@ export const products: Product[] = [
     tags: ["featured", "impossible"],
     imageUrl:
       "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&w=800&q=75&fit=crop",
+    robotImageUrl:
+      "https://images.unsplash.com/photo-1534796636912-3b58ddd1d5b6?auto=format&w=800&q=75&fit=crop",
     rating: 4.5,
     reviews: 1299,
     human: {
