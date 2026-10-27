@@ -57,7 +57,7 @@ export function Categories() {
       <Heading id="categories" eyebrow={robot ? "// SECTORS" : "Shop by feeling"} title={robot ? "Six Sectors of Humanity" : "Wander the boutique"} />
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {categories[world].map((c, i) => {
-          const I = (Icons as unknown as Record<string, Icons.LucideIcon>)[catIcons[robot ? 0 : 1][i]];
+          const I = (Icons as unknown as Record<string, Icons.LucideIcon>)[catIcons[robot ? 0 : 1]![i]!] ?? Icons.Sparkles;
           return (
             <Reveal key={c.name} delay={i * 70}>
               {robot ? (
