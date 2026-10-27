@@ -42,14 +42,14 @@
   --color-starlight: oklch(0.96 0.02 300);
   --color-nebula-blue: oklch(0.55 0.23 270);
 
-  /* Human palette */
+  /* Human palette — realistic, sophisticated e-commerce */
   --color-ivory: oklch(0.985 0.012 75);
-  --color-peach: oklch(0.88 0.07 40);
-  --color-coral: oklch(0.7 0.15 28);
-  --color-butter: oklch(0.93 0.08 90);
-  --color-rose: oklch(0.76 0.07 355);
-  --color-sage: oklch(0.76 0.05 135);
-  --color-cocoa: oklch(0.34 0.03 40);
+  --color-peach: oklch(0.96 0.015 60);    /* clean cream, not pastel */
+  --color-coral: oklch(0.55 0.13 28);    /* muted terracotta / rust */
+  --color-butter: oklch(0.95 0.025 75);  /* very light warm stone */
+  --color-rose: oklch(0.72 0.05 10);     /* muted dusty rose */
+  --color-sage: oklch(0.76 0.04 140);    /* soft sage */
+  --color-cocoa: oklch(0.2 0.01 40);     /* near-black charcoal */
 
   --font-display: var(--world-display);
   --font-body: var(--world-body);
@@ -66,29 +66,31 @@
 
 :root,
 [data-world="human"] {
-  --radius: 1.25rem;
+  --radius: 1rem;
   --background: oklch(0.985 0.012 75);
-  --foreground: oklch(0.34 0.03 40);
-  --card: oklch(0.97 0.02 70);
-  --card-foreground: oklch(0.34 0.03 40);
-  --popover: oklch(0.985 0.012 75);
-  --popover-foreground: oklch(0.34 0.03 40);
-  --primary: oklch(0.7 0.15 28);
+  --foreground: oklch(0.2 0.01 40);          /* charcoal */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.01 40);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.01 40);
+  --primary: oklch(0.55 0.13 28);            /* terracotta */
   --primary-foreground: oklch(0.985 0.012 75);
-  --secondary: oklch(0.93 0.08 90);
-  --secondary-foreground: oklch(0.34 0.03 40);
-  --muted: oklch(0.95 0.025 60);
-  --muted-foreground: oklch(0.5 0.03 40);
-  --accent: oklch(0.88 0.07 40);
-  --accent-foreground: oklch(0.34 0.03 40);
+  --secondary: oklch(0.95 0.025 75);
+  --secondary-foreground: oklch(0.2 0.01 40);
+  --muted: oklch(0.96 0.01 60);
+  --muted-foreground: oklch(0.48 0.02 40);
+  --accent: oklch(0.96 0.015 60);
+  --accent-foreground: oklch(0.2 0.01 40);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.98 0 0);
-  --border: oklch(0.88 0.03 60);
-  --input: oklch(0.88 0.03 60);
-  --ring: oklch(0.7 0.15 28);
-  --world-display: "Fraunces", Georgia, serif;
+  --border: oklch(0.9 0.01 60);
+  --input: oklch(0.9 0.01 60);
+  --ring: oklch(0.55 0.13 28);
+  --world-display: "DM Sans", system-ui, sans-serif;
   --world-body: "DM Sans", system-ui, sans-serif;
-  --shadow-soft: 0 30px 60px -30px oklch(0.34 0.03 40 / 0.35);
+  --shadow-soft: 0 4px 20px oklch(0.2 0.01 40 / 0.08), 0 1px 4px oklch(0.2 0.01 40 / 0.06);
+  --shadow-card: 0 1px 3px oklch(0.2 0.01 40 / 0.06), 0 4px 16px oklch(0.2 0.01 40 / 0.08);
+  --shadow-card-hover: 0 4px 12px oklch(0.2 0.01 40 / 0.1), 0 12px 32px oklch(0.2 0.01 40 / 0.12);
 }
 
 [data-world="robot"] {
@@ -168,14 +170,14 @@
 }
 
 @utility paper-bg {
+  /* Clean warm white — no pastel blobs */
   background:
-    radial-gradient(70% 50% at 85% 0%, oklch(0.93 0.08 90 / 0.6), transparent 70%),
-    radial-gradient(60% 50% at 0% 40%, oklch(0.88 0.07 40 / 0.45), transparent 70%),
-    radial-gradient(50% 40% at 90% 80%, oklch(0.76 0.07 355 / 0.3), transparent 70%),
+    radial-gradient(60% 45% at 100% 0%, oklch(0.97 0.025 35 / 0.3), transparent 65%),
     var(--color-ivory);
 }
 
 @utility grain {
+  /* kept for robot world use */
   position: relative;
   &::after {
     content: "";
@@ -187,6 +189,9 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
   }
 }
+
+@utility shadow-card { box-shadow: var(--shadow-card, 0 1px 3px oklch(0.2 0.01 40 / 0.07), 0 4px 16px oklch(0.2 0.01 40 / 0.09)); }
+@utility shadow-card-hover { box-shadow: var(--shadow-card-hover, 0 4px 12px oklch(0.2 0.01 40 / 0.1), 0 12px 32px oklch(0.2 0.01 40 / 0.13)); }
 
 @utility shadow-soft { box-shadow: var(--shadow-soft); }
 

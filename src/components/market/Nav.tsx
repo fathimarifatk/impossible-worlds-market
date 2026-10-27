@@ -34,48 +34,116 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const count = Object.values(cart).reduce((a, b) => a + b, 0);
   const robot = world === "robot";
-  const links = ["Explore", "Categories", "Collection"];
+  const links = robot ? ["Explore", "Categories", "Collection"] : ["Explore", "Categories", "Collection", "Offers"];
 
   return (
-    <header className={`sticky top-0 z-50 border-b transition-colors duration-700 ${robot ? "border-border bg-void/60 backdrop-blur-xl" : "border-border/60 bg-ivory/80 backdrop-blur-md"}`}>
+    <header
+      className={`sticky top-0 z-50 border-b transition-colors duration-700 ${
+        robot
+          ? "border-border bg-void/60 backdrop-blur-xl"
+          : "border-border bg-white/95 backdrop-blur-sm"
+      }`}
+    >
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        {/* Logo */}
         <a href="#top" className="flex shrink-0 items-center gap-2">
-          <span className={`grid size-8 place-items-center rounded-full ${robot ? "border border-cyan/60 text-cyan glow-cyan" : "bg-coral text-ivory"}`}>
-            <span className="font-display text-sm">{robot ? "◎" : "✺"}</span>
+          <span
+            className={`grid size-8 place-items-center rounded-full ${
+              robot ? "border border-cyan/60 text-cyan glow-cyan" : "bg-coral text-ivory"
+            }`}
+          >
+            <span className={robot ? "font-display text-sm" : "text-sm font-bold"}>
+              {robot ? "◎" : "✺"}
+            </span>
           </span>
           <span className="hidden font-display leading-none sm:block">
-            <span className={robot ? "text-xs tracking-[0.2em]" : "text-lg italic"}>Impossible</span>
-            <span className={`block ${robot ? "text-[10px] tracking-[0.4em] text-cyan" : "text-[11px] uppercase tracking-[0.3em] text-muted-foreground"}`}>Marketplace</span>
+            <span className={robot ? "text-xs tracking-[0.2em]" : "text-[17px] font-bold text-cocoa"}>
+              Impossible
+            </span>
+            <span
+              className={`block ${
+                robot
+                  ? "text-[10px] tracking-[0.4em] text-cyan"
+                  : "text-[10px] uppercase tracking-[0.3em] text-muted-foreground"
+              }`}
+            >
+              Marketplace
+            </span>
           </span>
         </a>
 
+        {/* Desktop nav links */}
         <ul className="hidden items-center gap-7 text-sm lg:flex">
           {links.map((l) => (
-            <li key={l}><a href={`#${l.toLowerCase()}`} className={`transition-colors hover:text-primary ${robot ? "font-mono text-xs uppercase tracking-widest" : ""}`}>{l}</a></li>
+            <li key={l}>
+              <a
+                href={`#${l.toLowerCase()}`}
+                className={`transition-colors hover:text-primary ${
+                  robot ? "font-mono text-xs uppercase tracking-widest" : "font-medium text-cocoa/80 hover:text-coral"
+                }`}
+              >
+                {l}
+              </a>
+            </li>
           ))}
         </ul>
 
+        {/* Right section */}
         <div className="flex items-center gap-1 sm:gap-2">
           <Switcher />
-          <button aria-label="Search" className="hidden size-9 place-items-center rounded-full hover:bg-muted md:grid"><Search className="size-4" /></button>
+
+          {/* Human: inline search input; Robot: icon-only */}
+          {robot ? (
+            <button aria-label="Search" className="hidden size-9 place-items-center rounded-full hover:bg-muted md:grid">
+              <Search className="size-4" />
+            </button>
+          ) : (
+            <div className="hidden items-center overflow-hidden rounded-full border border-border bg-white md:flex">
+              <input
+                type="search"
+                placeholder="Search…"
+                className="w-32 bg-transparent px-3 py-2 text-xs text-cocoa outline-none placeholder:text-muted-foreground lg:w-44"
+              />
+              <button aria-label="Search" className="grid size-8 place-items-center text-muted-foreground hover:text-coral">
+                <Search className="size-3.5" />
+              </button>
+            </div>
+          )}
+
           <button aria-label="Wishlist" className="relative hidden size-9 place-items-center rounded-full hover:bg-muted md:grid">
             <Heart className="size-4" />
-            {wishlist.size > 0 && <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-secondary text-[9px] text-secondary-foreground">{wishlist.size}</span>}
+            {wishlist.size > 0 && (
+              <span className={`absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full text-[9px] ${robot ? "bg-secondary text-secondary-foreground" : "bg-coral text-ivory"}`}>
+                {wishlist.size}
+              </span>
+            )}
           </button>
+
           <button aria-label="Cart" className="relative grid size-9 place-items-center rounded-full hover:bg-muted">
             <ShoppingBag className="size-4" />
-            {count > 0 && <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-primary text-[9px] text-primary-foreground">{count}</span>}
+            {count > 0 && (
+              <span className={`absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full text-[9px] ${robot ? "bg-primary text-primary-foreground" : "bg-cocoa text-ivory"}`}>
+                {count}
+              </span>
+            )}
           </button>
+
           <button aria-label="Menu" onClick={() => setOpen(!open)} className="grid size-9 place-items-center rounded-full hover:bg-muted lg:hidden">
             {open ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
         </div>
       </nav>
+
+      {/* Mobile menu */}
       {open && (
         <div className="border-t border-border px-6 py-4 lg:hidden">
           <ul className="flex flex-col gap-3">
             {[...links, "Search", "Wishlist"].map((l) => (
-              <li key={l}><a onClick={() => setOpen(false)} href={`#${l.toLowerCase()}`} className="block py-1">{l}</a></li>
+              <li key={l}>
+                <a onClick={() => setOpen(false)} href={`#${l.toLowerCase()}`} className="block py-1">
+                  {l}
+                </a>
+              </li>
             ))}
           </ul>
         </div>

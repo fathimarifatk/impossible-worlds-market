@@ -1,5 +1,5 @@
 import * as Icons from "lucide-react";
-import { Heart, Plus, ShoppingBag } from "lucide-react";
+import { Heart, ShoppingBag, Plus, Star } from "lucide-react";
 import { formatPrice, type Product } from "@/data/catalog";
 import { useStore } from "./store";
 
@@ -8,12 +8,27 @@ function ProductIcon({ name, className }: { name: string; className?: string }) 
   return <I className={className} strokeWidth={1.25} />;
 }
 
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex items-center gap-0.5">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          className={`size-3 ${i < Math.floor(rating) ? "fill-amber-400 text-amber-400" : i < rating ? "fill-amber-200 text-amber-300" : "fill-stone-200 text-stone-200"}`}
+          strokeWidth={0}
+        />
+      ))}
+    </div>
+  );
+}
+
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const { world, addToCart, toggleWish, wishlist } = useStore();
   const v = product[world];
   const wished = wishlist.has(product.id);
   const h = product.hue;
 
+  /* ─── ROBOT WORLD ─── unchanged futuristic style */
   if (world === "robot") {
     const accent = index % 2 ? "magenta" : "cyan";
     return (
@@ -45,25 +60,58 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
     );
   }
 
-  const tones = ["bg-peach", "bg-butter", "bg-rose/60", "bg-sage/60"];
+  /* ─── HUMAN WORLD ─── realistic e-commerce card */
   return (
-    <article className="group flex h-full flex-col">
-      <div className={`relative grid aspect-[4/5] place-items-center overflow-hidden rounded-[2rem] ${tones[index % 4]} shadow-soft transition-transform duration-700 group-hover:-translate-y-1`}>
-        <div className="absolute inset-x-8 top-8 bottom-0 rounded-t-full bg-ivory/60" />
-        <div className="absolute bottom-10 size-24 rounded-full bg-coral/20 blur-2xl" />
-        <ProductIcon name={product.icon} className="relative size-20 text-cocoa transition-transform duration-700 group-hover:-translate-y-2 group-hover:scale-105" />
-        <span className="absolute left-4 top-4 rounded-full bg-ivory px-3 py-1 text-[10px] font-semibold tracking-[0.18em] text-cocoa">{v.badge}</span>
-        <button aria-label="Add to wishlist" onClick={() => toggleWish(product.id)} className="absolute right-4 top-4 grid size-9 place-items-center rounded-full bg-ivory text-cocoa transition hover:text-coral">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white border border-border shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover">
+      {/* Product photo */}
+      <div className="relative overflow-hidden aspect-[4/3]">
+        <img
+          src={product.imageUrl}
+          alt={v.name}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          onError={(e) => {
+            const img = e.target as HTMLImageElement;
+            img.style.display = "none";
+            img.parentElement!.style.background = `oklch(0.93 0.025 ${h})`;
+          }}
+        />
+        {/* Badge */}
+        <span className="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[10px] font-semibold tracking-[0.15em] text-cocoa shadow-sm">
+          {v.badge}
+        </span>
+        {/* Wishlist */}
+        <button
+          aria-label="Add to wishlist"
+          onClick={() => toggleWish(product.id)}
+          className="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-white/95 text-stone-500 shadow-sm transition hover:text-coral"
+        >
           <Heart className={`size-4 ${wished ? "fill-coral text-coral" : ""}`} />
         </button>
       </div>
-      <div className="flex flex-1 flex-col px-1 pt-5">
-        <h3 className="font-display text-2xl italic leading-tight">{v.name}</h3>
-        <p className="mt-2 flex-1 text-sm text-muted-foreground">{v.description}</p>
-        <div className="mt-4 flex items-center justify-between">
-          <span className="font-display text-xl">{formatPrice(world, v.price)}</span>
-          <button onClick={() => addToCart(product.id)} className="inline-flex items-center gap-2 rounded-full bg-cocoa px-4 py-2.5 text-xs font-medium text-ivory transition hover:bg-coral">
-            <ShoppingBag className="size-3.5" /> Add to cart
+
+      {/* Card body */}
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="font-semibold leading-tight text-cocoa">{v.name}</h3>
+        <p className="mt-1.5 flex-1 text-sm text-muted-foreground leading-relaxed">{v.description}</p>
+
+        {/* Rating row */}
+        <div className="mt-3 flex items-center gap-2">
+          <StarRating rating={product.rating} />
+          <span className="text-xs text-muted-foreground">
+            {product.rating.toFixed(1)} ({product.reviews.toLocaleString("en-IN")})
+          </span>
+        </div>
+
+        {/* Price + Add to cart */}
+        <div className="mt-4 flex items-center justify-between gap-2">
+          <span className="text-lg font-bold text-cocoa">{formatPrice("human", v.price)}</span>
+          <button
+            onClick={() => addToCart(product.id)}
+            className="inline-flex items-center gap-1.5 rounded-full bg-cocoa px-4 py-2 text-xs font-semibold text-ivory transition hover:bg-coral"
+          >
+            <ShoppingBag className="size-3.5" />
+            Add to cart
           </button>
         </div>
       </div>
