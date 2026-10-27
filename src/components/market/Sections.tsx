@@ -126,7 +126,7 @@ export function ImpossibleCollection() {
           {[null, ...categories[world].map((_, i) => i)].map((i) => (
             <button key={String(i)} onClick={() => setCat(i)}
               className={`rounded-full px-4 py-2 text-xs transition ${robot ? "border font-mono tracking-widest" : "font-medium"} ${cat === i ? (robot ? "border-cyan bg-cyan text-void" : "bg-cocoa text-ivory") : robot ? "border-border text-muted-foreground hover:text-cyan" : "bg-ivory text-cocoa hover:bg-peach"}`}>
-              {i === null ? "All" : categories[world][i].name}
+              {i === null ? "All" : categories[world][i]?.name}
             </button>
           ))}
         </div>
